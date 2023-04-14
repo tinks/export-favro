@@ -1,0 +1,10 @@
+[project]
+name = "export-favro"
+version = "0.1.0"
+description = "Export Favro entities into a local sqlite db"
+requires-python = ">=3.10.0"
+authors = ["tinks"]
+dependencies = [
+    "requests>=2.82.2",
+    "python-dotenv>=1.0.0"
+]

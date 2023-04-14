@@ -1,0 +1,7 @@
+# Export Favro cards and information
+
+Favro is a nice bug tracking system, but sometimes you are required to migrate to another system. This tiny Python project extracts the cards and a lot of other stuff from Favro and stores it in a local SQLite database.
+
+When your data is in the database, it is easy to create files or calls to import it into your new bug tracking system.
+
+## Setup
