@@ -5,3 +5,15 @@ Favro is a nice bug tracking system, but sometimes you are required to migrate t
 When your data is in the database, it is easy to create files or calls to import it into your new bug tracking system.
 
 ## Setup
+
+Create a `config.env` file in the root of the project, which contains the following values:
+
+- `ORGANIZATION_ID`: the identifier for your instance in Favro
+- `API_KEY`: the authorization header that needs to be sent in each request. This value can be obtained by making a sample request with your user and the API key you created in Favro for this user and reading the authorization header in the request
+
+For example:
+
+``` text
+ORGANIZATION_ID=11a55553d38c111a579c5465
+API_KEY=Basic ddduZS5zYWludC1naGlzbGFpxxxxx2t0b3Iuc2U6OW5XbDlabVVFNkRrSzU5ekpfOEJva1c2ejRjTnJNVlblablabla==
+```

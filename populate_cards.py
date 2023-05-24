@@ -4,9 +4,10 @@ from db_actions import populate_db
 
 url = 'https://favro.com/api/v1/cards'
 query_params = {'unique': 'true', 'cardSequentialId': 0}
-start_range = 17767
-last_id = 17767
-end_range = 17768
+# cards are fetched in batches of 1000 cards, the last_id is a fixed number indicating the highest sequential ID in Favro
+start_range = 1
+last_id = 30000
+end_range = 1001
 
 
 while end_range <= (last_id+1) :
@@ -103,8 +104,8 @@ while end_range <= (last_id+1) :
 
     start_range = end_range
     if end_range == (last_id+1):
-        end_range += 100 # just to put the end range far over the limit
-    elif (end_range+100) > (last_id+1):
+        end_range += 1000 # just to put the end range far over the limit
+    elif (end_range+1000) > (last_id+1):
         end_range = last_id+1
     else:
-        end_range += 100
+        end_range += 1000

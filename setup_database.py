@@ -18,5 +18,7 @@ def setup_db():
     cursor.execute("CREATE TABLE IF NOT EXISTS card_to_assignment (card_id TEXT NOT NULL, user_id TEXT NOT NULL)")
     cursor.execute("CREATE TABLE IF NOT EXISTS card_to_attachment (card_id TEXT NOT NULL, attachment_url TEXT NOT NULL)")
     cursor.execute("CREATE TABLE IF NOT EXISTS card_dependency (from_card_id TEXT NOT NULL, to_card_id TEXT NOT NULL)")
+    cursor.execute("CREATE TABLE IF NOT EXISTS custom_field (id TEXT NOT NULL PRIMARY KEY, name TEXT NOT NULL, type TEXT NOT NULL, enabled TEXT)")
+    cursor.execute("CREATE TABLE IF NOT EXISTS custom_field_item (id TEXT NOT NULL PRIMARY KEY, custom_field_id TEXT NOT NULL, name TEXT NOT NULL)")
     
     db.close()
