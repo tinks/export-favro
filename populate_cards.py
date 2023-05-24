@@ -1,5 +1,6 @@
 from favro_request import make_request
 from db_actions import populate_db
+import json
 
 
 url = 'https://favro.com/api/v1/cards'
@@ -17,6 +18,7 @@ while end_range <= (last_id+1) :
     cards_to_assignments = [] # assignment on card values to populate card_to_assignment table
     cards_to_attachments = [] # attachment on card values to populate card_to_attachment table
     cards_to_dependencies = [] # dependencies on card values to populate card_to_dependency table
+    cards_to_custom_fields = [] # custom fields attached to a card
 
     empty_cards = []
 
@@ -77,6 +79,20 @@ while end_range <= (last_id+1) :
                 if d['isBefore'] == False:
                     dependency_value = (c['cardCommonId'],d['cardCommonId'])
                     cards_to_dependencies.append(dependency_value)
+        
+        # populate card custom fields (rudimenatary)
+        if len(c['customFields']) > 0:
+            for cf in c['customFields']:
+                custom_field_value = list(cf.values())[1]
+                if isinstance(custom_field_value, list):
+                    cfv = ','.join(custom_field_value)
+                elif isinstance(custom_field_value, dict):
+                    cfv = json.dumps(custom_field_value,indent=None,separators=[',',':'])
+                else:
+                    cfv = custom_field_value
+                custom_field = (c['cardCommonId'],cf['customFieldId'],cfv)
+                cards_to_custom_fields.append(custom_field)
+
 
 
     if len(card_values) > 0:
@@ -99,6 +115,10 @@ while end_range <= (last_id+1) :
         print("card to dependencies", len(cards_to_dependencies))
         query_dependencies = "INSERT INTO card_dependency (from_card_id, to_card_id) VALUES (?, ?)"
         populate_db(query_dependencies, cards_to_dependencies)
+    if len(cards_to_custom_fields) > 0:
+        print("card to custom fields", len(cards_to_custom_fields))
+        query_custom_fields = "INSERT INTO card_to_custom_field (card_id, custom_field_id, custom_field_blob) VALUES (?, ?, ?)"
+        populate_db(query_custom_fields, cards_to_custom_fields)
 
     print(empty_cards)
 
