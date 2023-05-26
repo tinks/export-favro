@@ -28,7 +28,7 @@ def make_request(url, query_params = {}):
         reset_time = datetime.datetime.fromisoformat(response.headers['X-RateLimit-Reset'])
         now = datetime.datetime.now(datetime.timezone.utc)
         diff = reset_time - now
-        time.sleep(diff)
+        time.sleep(diff.total_seconds())
         make_request(url, query_params)
     
     # requests are limited to 100 entities, if there are more, then pages is greater than 1
@@ -57,7 +57,7 @@ def request_all_pages(url, my_headers, query_params, entities, pages, page = 1):
             reset_time = datetime.datetime.fromisoformat(response.headers['X-RateLimit-Reset'])
             now = datetime.datetime.now(datetime.timezone.utc)
             diff = reset_time - now
-            time.sleep(diff)
+            time.sleep(diff.total_seconds())
             request_all_pages(url, my_headers, query_params, entities, pages, page)
         page += 1
     
