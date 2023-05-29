@@ -17,3 +17,98 @@ For example:
 ORGANIZATION_ID=11a55553d38c111a579c5465
 API_KEY=Basic ddduZS5zYWludC1naGlzbGFpxxxxx2t0b3Iuc2U6OW5XbDlabVVFNkRrSzU5ekpfOEJva1c2ejRjTnJNVlblablabla==
 ```
+
+## Database
+
+```mermaid
+erDiagram
+    card ||--o{ card_to_dependency: ""
+    card {
+        string id PK
+        string widget_id FK
+        string name
+        string description
+        int number
+        date start_date
+        date due_date
+    }
+    card_to_dependency {
+        string from_card_id FK
+        string to_card_id FK
+    }
+    card ||--o{ widget:""
+    widget {
+        string id PK,FK
+        string name
+    }
+    widget ||--o{ widget_to_collection:""
+    widget_to_collection {
+        string widget_id FK
+        string collection_id FK
+    }
+    widget_to_collection }o--|| collection:""
+    collection {
+        string id PK,FK
+        string name
+    }
+    card ||--o{ comment:""
+    comment {
+        string id PK,FK
+        string card_id FK
+        string comment
+        string user_id FK
+        date created
+    }
+    comment ||--o{ comment_to_attachment:""
+    comment_to_attachment {
+        string comment_id FK
+        string attachment_url
+    }
+    card ||--o{ card_to_tag:""
+    card_to_tag {
+        string card_id FK
+        string tag_id FK
+    }
+    card_to_tag }o--|| tag:""
+    tag {
+        string id PK,FK
+        string name
+    }
+    card ||--o{ card_to_assignment:""
+    card_to_assignment {
+        string card_id FK
+        string user_id FK
+    }
+    user ||--o{ card_to_assignment:""
+    user ||--o{ comment:""
+    user {
+        string id PK,FK
+        string name
+        string email
+    }
+    card ||--o{ card_to_attachment:""
+    card_to_attachment {
+        string card_id FK
+        string attachment_url
+    }
+    card ||--o{ card_to_custom_field:""
+    card_to_custom_field {
+        string card_id FK
+        string custom_field_id FK
+        string custom_field_blob
+    }
+    custom_field ||--o{ card_to_custom_field:""
+    custom_field {
+        string id PK,FK
+        string name
+        string type
+        string enabled "0 or 1"
+    }
+    custom_field ||--o{ custom_field_item:""
+    custom_field_item {
+        string id PK
+        string custom_field_id FK
+        string name
+    }
+
+```
