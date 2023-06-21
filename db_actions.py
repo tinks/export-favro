@@ -1,7 +1,7 @@
 import sqlite3
 
 def populate_db(query, values):
-    db = sqlite3.connect("favro.db")
+    db = sqlite3.connect("local/favro.db")
 
     cursor = db.cursor()
     cursor.executemany(query, values)
@@ -12,7 +12,7 @@ def populate_db(query, values):
     db.close()
 
 def request_data(query):
-    db = sqlite3.connect("favro.db")
+    db = sqlite3.connect("local/favro.db")
 
     cursor = db.cursor()
     cursor.execute(query)

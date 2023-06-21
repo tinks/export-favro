@@ -20,6 +20,8 @@ API_KEY=Basic ddduZS5zYWludC1naGlzbGFpxxxxx2t0b3Iuc2U6OW5XbDlabVVFNkRrSzU5ekpfOE
 
 ## Database
 
+The database is created in the `local` folder and is named `favro.db`.
+
 ```mermaid
 erDiagram
     card ||--o{ card_to_dependency: ""
@@ -63,6 +65,8 @@ erDiagram
     comment_to_attachment {
         string comment_id FK
         string attachment_url
+        string name
+        string new_url
     }
     card ||--o{ card_to_tag:""
     card_to_tag {
@@ -90,6 +94,8 @@ erDiagram
     card_to_attachment {
         string card_id FK
         string attachment_url
+        string name
+        string new_url
     }
     card ||--o{ card_to_custom_field:""
     card_to_custom_field {
@@ -112,3 +118,7 @@ erDiagram
     }
 
 ```
+
+## Attachments
+
+Attachments are immediately downloaded to the folder `local/card_attachments` or `local/comment_attachments`, respectively, with the UUID name and extension of the file. The UUID name is also stored in the database. If you upload the attachments to an online reachable bucket afterwards, then you can use the `new_url` in the `card_to_attachment` and `comment_to_attachment` tables respectively.

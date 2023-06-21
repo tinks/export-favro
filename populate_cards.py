@@ -1,5 +1,6 @@
 from favro_request import make_request
 from db_actions import populate_db
+from process_attachment import get_attachment_name, download_attachment
 import json
 
 
@@ -69,7 +70,9 @@ while end_range <= (last_id+1) :
         # populate card attachments
         if len(c['attachments']) > 0:
             for f in c['attachments']:
-                attachment_value = (c['cardCommonId'],f['fileURL'])
+                name = get_attachment_name(f['fileURL'])
+                download_attachment(f['fileURL'], 'local/card_attachments/')
+                attachment_value = (c['cardCommonId'],f['fileURL'],name,'')
                 cards_to_attachments.append(attachment_value)
 
         # populate card dependencies
@@ -109,7 +112,7 @@ while end_range <= (last_id+1) :
         populate_db(query_assignments, cards_to_assignments)
     if len(cards_to_attachments) > 0:
         print("card to attachments", len(cards_to_attachments))
-        query_attachments = "INSERT INTO card_to_attachment (card_id, attachment_url) VALUES (?, ?)"
+        query_attachments = "INSERT INTO card_to_attachment (card_id, attachment_url, name, new_url) VALUES (?, ?, ?, ?)"
         populate_db(query_attachments, cards_to_attachments)
     if len(cards_to_dependencies) > 0:
         print("card to dependencies", len(cards_to_dependencies))
