@@ -1,4 +1,3 @@
-import mysql.connector as mysql
 import sqlite3
 
 def setup_db():
