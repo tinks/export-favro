@@ -84,17 +84,18 @@ def populate_cards():
                         cards_to_dependencies.append(dependency_value)
             
             # populate card custom fields (rudimenatary)
-            if len(c['customFields']) > 0:
-                for cf in c['customFields']:
-                    custom_field_value = list(cf.values())[1]
-                    if isinstance(custom_field_value, list):
-                        cfv = ','.join(custom_field_value)
-                    elif isinstance(custom_field_value, dict):
-                        cfv = json.dumps(custom_field_value,indent=None,separators=[',',':'])
-                    else:
-                        cfv = custom_field_value
-                    custom_field = (c['cardCommonId'],cf['customFieldId'],cfv)
-                    cards_to_custom_fields.append(custom_field)
+            if "customFields" in c:
+                if len(c['customFields']) > 0:
+                    for cf in c['customFields']:
+                        custom_field_value = list(cf.values())[1]
+                        if isinstance(custom_field_value, list):
+                            cfv = ','.join(custom_field_value)
+                        elif isinstance(custom_field_value, dict):
+                            cfv = json.dumps(custom_field_value,indent=None,separators=[',',':'])
+                        else:
+                            cfv = custom_field_value
+                        custom_field = (c['cardCommonId'],cf['customFieldId'],cfv)
+                        cards_to_custom_fields.append(custom_field)
 
 
 

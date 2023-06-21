@@ -12,6 +12,4 @@ def download_attachment(url, path):
     name = get_attachment_name(url)
     p = path + name
     r = requests.get(url)
-    open (p, 'wb').write(r.content)
-
-
+    open(p, 'wb').write(r.content)

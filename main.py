@@ -8,13 +8,21 @@ from populate_cards import populate_cards
 from populate_comments import populate_comments
 
 def export_favro():
+    print ('Creating database')
     setup_db()
+    print ('Populating tags')
     populate_tags()
+    print ('Populating users')
     populate_users()
+    print ('Populating collections')
     populate_collections()
+    print ('Populating widgets and collection dependencies')
     populate_widgets()
+    print ('Populating available custom fields')
     populate_custom_fields()
+    print ('Populating cards and downloading attachments')
     populate_cards()
+    print ('Populating comments and downloading attachments')
     populate_comments()
 
 if __name__ == '__main__':
