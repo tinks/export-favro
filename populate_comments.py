@@ -5,6 +5,7 @@ from process_attachment import get_attachment_name, download_attachment
 def populate_comments():
     url = 'https://favro.com/api/v1/comments'
     request_params = {'cardCommonId': 1}
+    # comments are fetched per block of 100 cards
     start_range = 0
     end_range = 100
 
@@ -25,10 +26,12 @@ def populate_comments():
                 comments.extend(comment)
         
         if len(comments) > 0:
+            # create comment values to insert
             for c in comments:
                 comment_value = (c['commentId'],c['cardCommonId'],c['comment'],c['userId'],c['created'])
                 comment_values.append(comment_value)
-            
+
+                # create comment attachment values to insert and download attachments 
                 if "attachments" in c:
                     if len(c['attachments']) > 0:
                         for a in c['attachments']:
@@ -38,15 +41,17 @@ def populate_comments():
                             attachment_values.append(attachment)
             
             if len(comment_values) > 0:
+                print('comments:', len(comment_values))
                 query_comments = "INSERT INTO comment (id, card_id, comment, user_id, created) VALUES (?, ?, ?, ?, ?)"
                 populate_db(query_comments, comment_values)
-                print(cards[end_range-1][0])
+                print('last card sequence number for current range:', cards[end_range-1][0])
 
             if len(attachment_values) > 0:
+                print('attachments:', len(attachment_values))
                 query_attachments = "INSERT INTO comment_to_attachment (comment_id, attachment_url, name, new_url) VALUES (?, ?, ?, ?)"
                 populate_db(query_attachments, attachment_values)
         else:
-            print(cards[end_range-1][0])
+            print('last card sequence number for current range:', cards[end_range-1][0])
         
         start_range = end_range
         if end_range == total_range:
