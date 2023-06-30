@@ -177,4 +177,4 @@ Favro allows you to make as many custom fields as you want of various types. Dep
 
 Due to the different fields, the data from the custom fields is dumped as a text blob, which may be text, a number or a JSON object.
 
-Most of the custom field types and their content is described in the Favro API documentation, but not all of them and some of the documentation is incorrect.
+Most of the custom field types and their content are described in the Favro API documentation, but not all of them and some of the documentation is incorrect.
