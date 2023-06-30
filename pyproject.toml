@@ -1,10 +1,11 @@
 [project]
 name = "export-favro"
 version = "0.1.0"
-description = "Export Favro entities into a local sqlite db"
+description = "Export Favro entities into a local sqlite db and download attachments"
 requires-python = ">=3.10.0"
-authors = ["tinks"]
+authors = [{ name = "tinks", email = "myemail@email.com"}]
+license = { text = "MIT License"}
 dependencies = [
-    "requests>=2.82.2",
+    "requests>=2.28.2",
     "python-dotenv>=1.0.0"
 ]
